@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
-import { Card, Text, Button, FAB } from 'react-native-paper';
+import { Card, Text, Button, FAB, Appbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { router } from 'expo-router';
 import * as Location from 'expo-location';
@@ -123,6 +123,9 @@ const MyComponent = () => {
 
   return (
     <View style={styles.container}>
+      <Appbar.Header>
+        <Appbar.Content title="Issues" />
+      </Appbar.Header>
       <FlatList
         data={issues}
         keyExtractor={(item) => item.id}
