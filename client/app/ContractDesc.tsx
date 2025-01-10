@@ -30,7 +30,7 @@ const ContractDesc = () => {
     const fetchPendingPayment = async () => {
       try {
         console.log('Fetching pending payment for referenceId:', contractData.referenceId);
-        const response = await axios.get(`http://192.168.54.15:4000/govcontract/${contractData.referenceId}`);
+        const response = await axios.get(`http://192.168.12.65:4000/govcontract/${contractData.referenceId}`);
 
         if (response.data) {
           setPendingPayment(response.data); // Set the pending payment data (array)
@@ -94,7 +94,7 @@ const ContractDesc = () => {
       };
 
       // Use axios to make the POST request
-      const response = await axios.post('http://192.168.54.15:4000/govcontract', bidData, {
+      const response = await axios.post('http://192.168.12.65:4000/govcontract', bidData, {
         headers: {
           'Content-Type': 'application/json',
         },

@@ -63,7 +63,7 @@ const PeopleIssue = () => {
     };
 
     try {
-      const response = await axios.post('http://192.168.54.213:4000/issues', issue);
+      const response = await axios.post('http://192.168.12.65:4000/issues', issue);
       console.log('Issue raised:', response.data);
       alert('Issue raised successfully!');
     } catch (error) {

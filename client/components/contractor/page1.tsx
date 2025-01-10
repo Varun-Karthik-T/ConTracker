@@ -33,7 +33,7 @@ export default function Page1() {
     // Define an async function to fetch data
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://192.168.54.15:4000/tenders'); // Make the request
+        const response = await axios.get('http://192.168.12.65:4000/tenders'); // Make the request
         setData(response.data); // Set the data from the response
       } catch (error) {
         console.error('Error fetching data:', error); // Handle errors
