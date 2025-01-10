@@ -2,10 +2,12 @@ import * as React from 'react';
 import { BottomNavigation, Text } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { useLayoutEffect } from 'react';
+import  Page1  from '../components/contractor/page1';
+import  Page2  from '../components/contractor/page2';
 
-const MusicRoute = () => <Text>Music</Text>;
+const TenderRoute = () => <Page1></Page1>;
 
-const AlbumsRoute = () => <Text>Albums</Text>;
+const ContractRoute = () => <Page2></Page2>;
 
 const ContractBottom = () => {
   const navigation = useNavigation();
@@ -18,13 +20,13 @@ const ContractBottom = () => {
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'music', title: 'Favorites', focusedIcon: 'heart', unfocusedIcon: 'heart-outline' },
-    { key: 'albums', title: 'Albums', focusedIcon: 'album' },
+    { key: 'Tender', title: 'Tenders', focusedIcon: 'heart', unfocusedIcon: 'heart-outline' },
+    { key: 'Contract', title: 'Contract', focusedIcon: 'album' },
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
-    music: MusicRoute,
-    albums: AlbumsRoute,
+    Tender: TenderRoute,
+    Contract: ContractRoute,
   });
 
   return (
