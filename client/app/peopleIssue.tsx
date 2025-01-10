@@ -4,10 +4,10 @@ import { Card } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const PeopleIssue = () => {
-  const [issueName, setIssueName] = useState('');
-  const [problemType, setProblemType] = useState('');
+  const [issueType, setIssueType] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
   const [location, setLocation] = useState<Location.LocationObjectCoords | null>(null);
@@ -21,14 +21,15 @@ const PeopleIssue = () => {
     }
 
     const result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ['livePhotos'], // Use an array of MediaType
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
+      base64: true, // Add this line to get the Base64 string
     });
 
     if (!result.canceled && result.assets && result.assets.length > 0) {
-      setImage(result.assets[0].uri);
+      setImage(result.assets[0].base64); // Store the Base64 string
     }
   };
 
@@ -43,27 +44,32 @@ const PeopleIssue = () => {
     setLocation(location.coords);
   };
 
-  const handleSubmit = () => {
-    if (!issueName || !problemType || !description || !image || !location) {
+  const handleSubmit = async () => {
+    if (!issueType || !description || !image || !location) {
       alert('Please fill in all fields and capture an image.');
       return;
     }
 
     const issue = {
       id: new Date().getTime().toString(),
-      name: issueName,
-      problem_type: problemType,
+      issue_type: issueType,
       description,
       date_of_complaint: dateOfComplaint,
       approval: 0,
       denial: 0,
       status: 'pending',
-      image,
+      image: `data:image/jpeg;base64,${image}`, // Send the Base64 string with the data URI prefix
       location,
     };
 
-    console.log('Issue raised:', issue);
-    alert('Issue raised successfully!');
+    try {
+      const response = await axios.post('http://192.168.54.213:4000/issues', issue);
+      console.log('Issue raised:', response.data);
+      alert('Issue raised successfully!');
+    } catch (error) {
+      console.error('Error raising issue:', error);
+      alert('There was an error raising the issue. Please try again.');
+    }
   };
 
   useEffect(() => {
@@ -74,19 +80,12 @@ const PeopleIssue = () => {
     <View style={styles.container}>
       <Card style={styles.card}>
         <Card.Content>
-          <Text style={styles.label}>Issue Name</Text>
+          <Text style={styles.label}>Issue Type</Text>
           <TextInput
             style={styles.input}
-            value={issueName}
-            onChangeText={setIssueName}
-            placeholder="Enter issue name"
-          />
-          <Text style={styles.label}>Problem Type</Text>
-          <TextInput
-            style={styles.input}
-            value={problemType}
-            onChangeText={setProblemType}
-            placeholder="Enter problem type"
+            value={issueType}
+            onChangeText={setIssueType}
+            placeholder="Enter issue type"
           />
           <Text style={styles.label}>Description</Text>
           <TextInput
@@ -97,7 +96,7 @@ const PeopleIssue = () => {
             multiline
           />
           <Button title="Capture Image" onPress={handleCaptureImage} />
-          {image && <Image source={{ uri: image }} style={styles.image} />}
+          {image && <Image source={{ uri: `data:image/jpeg;base64,${image}` }} style={styles.image} />}
           <Button title="Submit Issue" onPress={handleSubmit} />
         </Card.Content>
       </Card>

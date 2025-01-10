@@ -4,39 +4,12 @@ import { Card, Text, Button, FAB, Appbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { router } from 'expo-router';
 import * as Location from 'expo-location';
-
-const issues = [
-  {
-    id: '1',
-    name: 'John Doe',
-    problem_type: 'Road Damage',
-    description: 'Road damage near Adyar.',
-    date_of_complaint: '2025-01-10',
-    approval: 4,
-    denial: 3,
-    status: 'resolved',
-    image: 'https://picsum.photos/200/300', // Add image URL
-    location: { latitude: 12.8396654, longitude: 80.1552653 },
-  },
-  {
-    id: '2',
-    name: 'Jane Smith',
-    problem_type: 'Water Leakage',
-    description: 'Water leakage in the main street.',
-    date_of_complaint: '2025-01-12',
-    approval: 2,
-    denial: 1,
-    status: 'pending',
-    image: 'https://picsum.photos/200/300', // Add image URL
-    location: { latitude: 13.0827, longitude: 80.2707 },
-  },
-  // Add more issues as needed
-];
+import axios from 'axios';
 
 interface Issue {
   id: string;
   name: string;
-  problem_type: string;
+  issue_type: string; // Replace problem_type with issue_type
   description: string;
   date_of_complaint: string;
   approval: number;
@@ -76,7 +49,7 @@ const IssueCard: React.FC<{ issue: Issue; userLocation: Location.LocationObjectC
       <Card.Content>
         <View style={styles.content}>
           <View style={styles.textContainer}>
-            <Text variant="titleLarge" style={styles.issueName}>{issue.name}</Text>
+            <Text variant="titleLarge" style={styles.issueName}>{issue.issue_type}</Text>
             <Text variant="bodyMedium" numberOfLines={2} ellipsizeMode="tail" style={styles.issueDescription}>
               {issue.description}
             </Text>
@@ -91,6 +64,7 @@ const IssueCard: React.FC<{ issue: Issue; userLocation: Location.LocationObjectC
 const MyComponent = () => {
   const [userLocation, setUserLocation] = React.useState<Location.LocationObjectCoords | null>(null);
   const [loading, setLoading] = React.useState(true);
+  const [issues, setIssues] = React.useState<Issue[]>([]);
 
   const getLocation = async () => {
     try {
@@ -109,8 +83,18 @@ const MyComponent = () => {
     }
   };
 
+  const fetchIssues = async () => {
+    try {
+      const response = await axios.get('http://192.168.54.213:4000/issues'); // Use your machine's IP address
+      setIssues(response.data);
+    } catch (error) {
+      console.error('Error fetching issues:', error);
+    }
+  };
+
   React.useEffect(() => {
     getLocation();
+    fetchIssues();
   }, []);
 
   if (loading) {
