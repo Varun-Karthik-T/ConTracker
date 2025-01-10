@@ -15,7 +15,7 @@ const Home = () => (
       <Text variant="bodyMedium">Card content</Text>
     </Card.Content>
   </Card>
-  <Card>
+  <Card onPress={()=> router.push('/peopleBottom')}>
     <Card.Content>
       <Text variant="titleLarge">Card title</Text>
       <Text variant="bodyMedium">Card content</Text>
