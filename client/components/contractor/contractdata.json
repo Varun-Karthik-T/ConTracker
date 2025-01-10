@@ -1,0 +1,22 @@
+[
+    {
+      "organisationChain": "Oil and Natural Gas Corporation",
+      "referenceId": "ONGC-MECH-2022",
+      "bidAmount": 1200000
+    },
+    {
+      "organisationChain": "Bharat Heavy Electricals Limited",
+      "referenceId": "BHEL-IT-3030",
+      "bidAmount": 950000
+    },
+    {
+      "organisationChain": "Airports Authority of India",
+      "referenceId": "AAI-AVIATION-4040",
+      "bidAmount": 1500000
+    },
+    {
+      "organisationChain": "Indian Oil Corporation",
+      "referenceId": "IOCL-FUEL-7070",
+      "bidAmount": 800000
+    }
+  ]
