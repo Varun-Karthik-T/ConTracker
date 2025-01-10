@@ -1,15 +1,27 @@
-import { Text, View } from "react-native";
 
-export default function Index() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
-    </View>
-  );
-}
+import * as React from 'react';
+import { Avatar, Button, Card, Text } from 'react-native-paper';
+import {router } from 'expo-router';
+import { View } from 'react-native';
+
+
+
+const Home = () => (
+
+  <View>
+  <Card onPress={() => router.push('/contractBottom')} style={{margin: 10}}>
+    <Card.Content>
+      <Text variant="titleLarge">Card title</Text>
+      <Text variant="bodyMedium">Card content</Text>
+    </Card.Content>
+  </Card>
+  <Card>
+    <Card.Content>
+      <Text variant="titleLarge">Card title</Text>
+      <Text variant="bodyMedium">Card content</Text>
+    </Card.Content>
+  </Card></View>
+  
+);
+
+export default Home;
