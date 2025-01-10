@@ -7,3 +7,6 @@ export default function Page1() {
         </View>
     );
     }
+
+
+    
