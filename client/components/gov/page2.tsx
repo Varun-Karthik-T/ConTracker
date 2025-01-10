@@ -25,33 +25,50 @@ const CardWithMargin = ({ children }) => (
   <View style={styles.cardContainer}>{children}</View>
 );
 
-export default function Page1() {
+export default function Page2() {
   const [data, setData] = useState<Array<any>>([]);
+  const [loading, setLoading] = useState(true); // Add loading state
+  const [error, setError] = useState(''); // Add error state
   const router = useRouter();
 
   useEffect(() => {
     // Define an async function to fetch data
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://192.168.54.15:4000/tenders'); // Make the request
+        // Replace with your server's IP address and endpoint
+        const response = await axios.get('http://192.168.54.15:4000/contracts');
         setData(response.data); // Set the data from the response
       } catch (error) {
-        console.error('Error fetching data:', error); // Handle errors
+        setError('Failed to fetch data'); // Set error message
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false); // Set loading to false after the request completes
       }
     };
 
     fetchData(); // Call the async function
   }, []);
 
+  // Show loading message while data is being fetched
+  if (loading) {
+    return <Text style={styles.loadingText}>Loading...</Text>;
+  }
+
+  // Show error message if the request fails
+  if (error) {
+    return <Text style={styles.errorText}>{error}</Text>;
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Active Tenders</Text>
+      <Text style={styles.title}>Your Contracts</Text>
       {data.map((item) => (
-        <CardWithMargin key={item.tenderId}>
+        item.panelid === 1 &&
+        <CardWithMargin key={item.referenceId}>
           <MyComponent
             title={item.organisationChain}
-            content={item.tenderId}
-            onPress={() => router.push({ pathname: '/TenderDesc', params: { tender: JSON.stringify(item) } })}
+            content={item.referenceId}
+            onPress={() => router.push({ pathname: '/Paymentdesc', params: { contract: JSON.stringify(item) } })}
           />
         </CardWithMargin>
       ))}
@@ -83,5 +100,17 @@ const styles = StyleSheet.create({
   cardContent: {
     fontSize: 16,
     color: '#16a085',
+  },
+  loadingText: {
+    fontSize: 18,
+    textAlign: 'center',
+    marginTop: 20,
+    color: '#2c3e50',
+  },
+  errorText: {
+    fontSize: 18,
+    textAlign: 'center',
+    marginTop: 20,
+    color: 'red',
   },
 });
