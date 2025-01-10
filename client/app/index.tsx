@@ -20,7 +20,14 @@ const Home = () => (
       <Text variant="titleLarge">Card title</Text>
       <Text variant="bodyMedium">Card content</Text>
     </Card.Content>
-  </Card></View>
+  </Card>
+  <Card onPress={()=> router.push('/gov')}>
+    <Card.Content>
+      <Text variant="titleLarge">Card title</Text>
+      <Text variant="bodyMedium">Card content</Text>
+    </Card.Content>
+  </Card>
+  </View>
   
 );
 
