@@ -1,29 +1,179 @@
 import * as React from 'react';
-import { BottomNavigation, Text } from 'react-native-paper';
+import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { Card, Text, Button, FAB } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import { router } from 'expo-router';
+import * as Location from 'expo-location';
 
-const MusicRoute = () => <Text>Music</Text>;
+const issues = [
+  {
+    id: '1',
+    name: 'John Doe',
+    problem_type: 'Road Damage',
+    description: 'Road damage near Adyar.',
+    date_of_complaint: '2025-01-10',
+    approval: 4,
+    denial: 3,
+    status: 'resolved',
+    image: 'https://picsum.photos/200/300', // Add image URL
+    location: { latitude: 12.8396654, longitude: 80.1552653 },
+  },
+  {
+    id: '2',
+    name: 'Jane Smith',
+    problem_type: 'Water Leakage',
+    description: 'Water leakage in the main street.',
+    date_of_complaint: '2025-01-12',
+    approval: 2,
+    denial: 1,
+    status: 'pending',
+    image: 'https://picsum.photos/200/300', // Add image URL
+    location: { latitude: 13.0827, longitude: 80.2707 },
+  },
+  // Add more issues as needed
+];
 
-const AlbumsRoute = () => <Text>Albums</Text>;
+interface Issue {
+  id: string;
+  name: string;
+  problem_type: string;
+  description: string;
+  date_of_complaint: string;
+  approval: number;
+  denial: number;
+  status: string;
+  image: string; // Add image property
+  location: {
+    latitude: number;
+    longitude: number;
+  }; // Add location property
+}
 
-const MyComponent = () => {
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: 'music', title: 'Favorites', focusedIcon: 'heart', unfocusedIcon: 'heart-outline'},
-    { key: 'albums', title: 'Albums', focusedIcon: 'album' }
-  ]);
+const getDistance = (lat1: number, lon1: number, lat2: number, lon2: number) => {
+  const R = 6371; // Radius of the Earth in km
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    0.5 - Math.cos(dLat) / 2 + Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * (1 - Math.cos(dLon)) / 2;
+  return R * 2 * Math.asin(Math.sqrt(a));
+};
 
-  const renderScene = BottomNavigation.SceneMap({
-    music: MusicRoute,
-    albums: AlbumsRoute,
-  });
+const IssueCard: React.FC<{ issue: Issue; userLocation: Location.LocationObjectCoords | null }> = ({ issue, userLocation }) => {
+  const distance = userLocation ? getDistance(userLocation.latitude, userLocation.longitude, issue.location.latitude, issue.location.longitude) : null;
+  const votable = distance !== null && distance <= 4;
+
+  const handlePress = () => {
+    router.push({
+      pathname: './peopleVote',
+      params: {
+        issue: JSON.stringify({ ...issue, votable: votable ? 1 : 0 }), // Pass the serialized issue object as a parameter
+      },
+    });
+  };
 
   return (
-    <BottomNavigation
-      navigationState={{ index, routes }}
-      onIndexChange={setIndex}
-      renderScene={renderScene}
-    />
+    <Card style={[styles.card, !votable && { opacity: 0.5 }]}>
+      <Card.Content>
+        <View style={styles.content}>
+          <View style={styles.textContainer}>
+            <Text variant="titleLarge" style={styles.issueName}>{issue.name}</Text>
+            <Text variant="bodyMedium" numberOfLines={2} ellipsizeMode="tail" style={styles.issueDescription}>
+              {issue.description}
+            </Text>
+          </View>
+          <Button style={styles.viewButton} onPress={handlePress}>View</Button>
+        </View>
+      </Card.Content>
+    </Card>
   );
 };
+
+const MyComponent = () => {
+  const [userLocation, setUserLocation] = React.useState<Location.LocationObjectCoords | null>(null);
+  const [loading, setLoading] = React.useState(true);
+
+  const getLocation = async () => {
+    try {
+      const { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Permission to access location was denied');
+        return;
+      }
+
+      const location = await Location.getCurrentPositionAsync({});
+      setUserLocation(location.coords);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching location:', error);
+      setTimeout(getLocation, 5000); // Retry after 5 seconds
+    }
+  };
+
+  React.useEffect(() => {
+    getLocation();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={issues}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <IssueCard issue={item} userLocation={userLocation} />}
+      />
+      <FAB
+        style={styles.fab}
+        icon="plus"
+        onPress={() => router.push('/peopleIssue')} // Adjust this if you need the FAB to navigate somewhere else
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  card: {
+    margin: 10,
+  },
+  content: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  textContainer: {
+    flex: 1,
+    marginRight: 10,
+  },
+  issueName: {
+    textAlign: 'left',
+  },
+  issueDescription: {
+    textAlign: 'left',
+    opacity: 0.8,
+  },
+  viewButton: {
+    alignSelf: 'center',
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+  },
+});
 
 export default MyComponent;
