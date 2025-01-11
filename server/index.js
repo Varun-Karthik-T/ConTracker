@@ -1,5 +1,8 @@
 const { createIssue, fetchIssue } = require('./tests/issueFunctions');
+require('dotenv').config();
 
+const { ACCOUNT_ADDRESS } = process.env;
+console.log("ACCOUNT",ACCOUNT_ADDRESS);
 async function main() {
   const issueDetails = {
     issueId: 9,
@@ -14,8 +17,8 @@ async function main() {
     longitude: 801552797,
   };
 
-  const account = '0x874b2E9Bd8A7C3F89EaB4Bf51161750996C3d8Ea'; // Replace with your account address
-
+  const account = ACCOUNT_ADDRESS; // Replace with your account address
+  console.log("ACCOUNT:",account);
   // Create an issue
   const createdIssue = await createIssue(issueDetails, account);
   console.log("Created Issue:", createdIssue);

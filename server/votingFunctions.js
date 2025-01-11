@@ -1,12 +1,14 @@
 const Web3 = require('web3');
 const VotingSystem = require('../dapp/build/contracts/VotingSystem.json');
+require('dotenv').config();
 
+const { VOTING_CONTRACT_ADDRESS } = process.env;
 // Set up web3 provider (e.g., local Ganache instance or Infura for a public network)
 const web3 = new Web3('http://127.0.0.1:7545'); // Replace with your provider URL
 
 // Get the contract ABI and address
 const abi = VotingSystem.abi;
-const contractAddress = '0x9b6d4cd37D1bd0b12426dB78Dbb6b5C03C0C6035'; // Replace with your deployed contract address
+const contractAddress = VOTING_CONTRACT_ADDRESS; // Replace with your deployed contract address
 
 // Create a contract instance
 const contract = new web3.eth.Contract(abi, contractAddress);

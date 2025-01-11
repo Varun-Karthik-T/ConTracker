@@ -1,4 +1,7 @@
 const { createSpend, voteOnSpend, fetchSpend } = require('./votingFunctions');
+require('dotenv').config();
+
+const { ACCOUNT_ADDRESS } = process.env;
 
 async function main() {
   const spendDetails = {
@@ -6,7 +9,7 @@ async function main() {
     reason: "Contractor spend for road repar"
   };
 
-  const account = '0x9E75d87324FeEb9c8c618ed05e4fddf84E4Fff1C'; // Replace with your account address
+  const account = ACCOUNT_ADDRESS; // Replace with your account address
 
   // Create a spend
   const createdSpend = await createSpend(spendDetails, account);
