@@ -4,17 +4,15 @@ const ApprovedContractArtifact = require('../../dapp/build/contracts/ApprovedCon
 
 const { RPC_URL, PROJECT_CONTRACT_ADDRESS } = process.env;
 
-// Set up Web3 provider
-const web3 = new Web3(RPC_URL); // Replace with your provider URL
+const web3 = new Web3(RPC_URL); 
 
-// Get the contract ABI and address
+
 const abi = ApprovedContractArtifact.abi;
-const contractAddress = PROJECT_CONTRACT_ADDRESS; // Replace with your deployed contract address
+const contractAddress = PROJECT_CONTRACT_ADDRESS; 
 
-// Create a contract instance
+
 const contract = new web3.eth.Contract(abi, contractAddress);
 
-// Function to add a winner
 const addWinner = async (issueId, contractorId, projectId, name, tenure, amount, location, verifiedBy, approvedBy) => {
   const accounts = await web3.eth.getAccounts();
   const owner = accounts[0];
@@ -26,7 +24,7 @@ const addWinner = async (issueId, contractorId, projectId, name, tenure, amount,
       return;
     }
   } catch (error) {
-    // If the winner is not set, the call will fail, and we can proceed to set the winner
+
   }
 
   await contract.methods.setWinner(issueId, contractorId, projectId, name, tenure, amount, location, verifiedBy, approvedBy)
@@ -34,7 +32,6 @@ const addWinner = async (issueId, contractorId, projectId, name, tenure, amount,
   console.log('Winner added successfully');
 };
 
-// Function to get winner details by project ID
 const getWinnerDetails = async (projectId) => {
   const winner = await contract.methods.getWinner().call();
 
@@ -53,8 +50,6 @@ const getWinnerDetails = async (projectId) => {
     console.log('No winner found for the given project ID');
   }
 };
-
-// Export the functions
 module.exports = {
   addWinner,
   getWinnerDetails
