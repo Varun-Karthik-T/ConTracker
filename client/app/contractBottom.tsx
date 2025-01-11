@@ -20,8 +20,8 @@ const ContractBottom = () => {
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'Tender', title: 'Tenders', focusedIcon: 'heart', unfocusedIcon: 'heart-outline' },
-    { key: 'Contract', title: 'Contract', focusedIcon: 'album' },
+    { key: 'Tender', title: 'Tenders', focusedIcon: 'file-document-multiple'},
+    { key: 'Contract', title: 'Contract', focusedIcon: 'file-sign' },
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
