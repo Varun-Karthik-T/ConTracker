@@ -5,7 +5,7 @@ export default function RootLayout() {
     <Stack screenOptions={{ headerTitleAlign: "center", headerTintColor: "#2c3e50" }}>
       <Stack.Screen name="index" options={{ headerTitle: "Login Portals" }} />
       <Stack.Screen name="contractBottom" options={{ headerTitle: "Contractor" }} />
-      <Stack.Screen name="peopleBottom" options={{ headerTitle: "People" }} />
+      <Stack.Screen name="peopleBottom" options={{ headerTitle: "Issues" }} />
       <Stack.Screen name="gov" options={{ headerTitle: "Government" }} />
       <Stack.Screen name="ContractDesc" options={{ headerTitle: "" }} />
       <Stack.Screen name="TenderDesc" options={{ headerTitle: "Tender Details" }} />

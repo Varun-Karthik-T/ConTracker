@@ -109,9 +109,6 @@ const MyComponent = () => {
 
   return (
     <View style={styles.container}>
-      <Appbar.Header>
-        <Appbar.Content title="Issues" />
-      </Appbar.Header>
       <FlatList
         data={issues}
         keyExtractor={(item) => item.id}
