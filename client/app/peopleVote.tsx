@@ -13,7 +13,7 @@ const PeopleVote = () => {
   React.useEffect(() => {
     const fetchVoteStatus = async () => {
       try {
-        const response = await axios.get('http://192.168.54.213:4000/vote-status', {
+        const response = await axios.get('http://192.168.12.65:4000/vote-status', {
           params: {
             userId: '1', // Hardcoded user ID
             issueId: parsedIssue.id,

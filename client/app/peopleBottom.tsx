@@ -85,7 +85,7 @@ const MyComponent = () => {
 
   const fetchIssues = async () => {
     try {
-      const response = await axios.get('http://192.168.54.213:4000/issues'); // Use your machine's IP address
+      const response = await axios.get('http://192.168.12.65:4000/issues'); // Use your machine's IP address
       setIssues(response.data);
     } catch (error) {
       console.error('Error fetching issues:', error);
