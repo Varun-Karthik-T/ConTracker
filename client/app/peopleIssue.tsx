@@ -21,7 +21,7 @@ const PeopleIssue = () => {
     }
 
     const result = await ImagePicker.launchCameraAsync({
-      mediaTypes: ['livePhotos'], // Use an array of MediaType
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
@@ -58,7 +58,7 @@ const PeopleIssue = () => {
       approval: 0,
       denial: 0,
       status: 'pending',
-      image: `data:image/jpeg;base64,${image}`, // Send the Base64 string with the data URI prefix
+       // Send the Base64 string with the data URI prefix
       location,
     };
 

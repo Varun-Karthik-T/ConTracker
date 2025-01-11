@@ -37,7 +37,7 @@ const PeopleVote = () => {
   const handleVote = async (voteType: 'approve' | 'deny') => {
     try {
       const response = await axios.post('http://192.168.54.213:4000/vote', {
-        issueId: parsedIssue.id,
+        issueId: String(parsedIssue.id),
         userId: '1', // Hardcoded user ID
         voteType,
       });

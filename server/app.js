@@ -25,7 +25,7 @@ app.post('/issues', async (req, res) => {
     );
 
     // Set the id field to the next sequence value
-    issue.id = counter.seq;
+    issue.id = String(counter.seq);
 
     // Insert the new issue
     const newIssue = new Issue(issue);
@@ -37,7 +37,6 @@ app.post('/issues', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
 
 app.get('/issues', async (req, res) => {
   try {
@@ -60,6 +59,7 @@ app.post('/vote', async (req, res) => {
 
     // Find the issue by its id field
     const issue = await Issue.findOne({ id: issueId });
+    console.log(issue);
     if (!issue) {
       return res.status(404).json({ error: 'Issue not found' });
     }
@@ -80,8 +80,6 @@ app.post('/vote', async (req, res) => {
     console.log('Updated issue:', update);
 
     // Create a new UserIssue mapping
-    const temp = Issue.find()
- 
     await UserIssue.collection.insertOne({ userId, issueId, voted: voteType });
 
     return res.status(200).json({ message: 'Vote recorded successfully' });
