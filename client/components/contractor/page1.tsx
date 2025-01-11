@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity, StyleSheet } from 'react-nati
 import { Card } from 'react-native-paper';
 import { useRouter } from 'expo-router';
 import axios from 'axios'; // Import Axios
+import config from '@/app/config';
 
 interface MyComponentProps {
   title: string;
@@ -33,7 +34,7 @@ export default function Page1() {
     // Define an async function to fetch data
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://192.168.12.65:4000/tenders'); // Make the request
+        const response = await axios.get(`http://${config.ipAddress}:4000/tenders`); // Make the request
         setData(response.data); // Set the data from the response
       } catch (error) {
         console.error('Error fetching data:', error); // Handle errors

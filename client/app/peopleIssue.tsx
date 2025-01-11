@@ -5,6 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import config from './config';
 
 const PeopleIssue = () => {
   const [issueType, setIssueType] = useState('');
@@ -62,7 +63,7 @@ const PeopleIssue = () => {
     };
 
     try {
-      const response = await axios.post('http://192.168.12.65:4000/issues', issue);
+      const response = await axios.post(`http://${config.ipAddress}:4000/issues`, issue);
       console.log('Issue raised:', response.data);
       alert('Issue raised successfully!');
     } catch (error) {

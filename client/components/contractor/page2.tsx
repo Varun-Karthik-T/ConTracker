@@ -9,6 +9,7 @@ import {
 import { Card } from "react-native-paper";
 import { useRouter } from "expo-router";
 import axios from "axios"; // Import Axios
+import config from "@/app/config";
 
 interface MyComponentProps {
   title: string;
@@ -46,7 +47,7 @@ export default function Page2() {
     const fetchData = async () => {
       try {
         // Replace with your server's IP address and endpoint
-        const response = await axios.get("http://192.168.12.65:4000/contracts");
+        const response = await axios.get(`http://${config.ipAddress}:4000/contracts`);
         setData(response.data); // Set the data from the response
       } catch (error) {
         setError("Failed to fetch data"); // Set error message

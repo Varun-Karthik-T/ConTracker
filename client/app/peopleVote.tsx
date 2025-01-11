@@ -3,6 +3,7 @@ import { View, StyleSheet, Image, Alert } from 'react-native';
 import { Card, Text, Button } from 'react-native-paper';
 import { useLocalSearchParams } from 'expo-router';
 import axios from 'axios';
+import config from './config';
 
 const PeopleVote = () => {
   const { issue } = useLocalSearchParams();
@@ -13,7 +14,7 @@ const PeopleVote = () => {
   React.useEffect(() => {
     const fetchVoteStatus = async () => {
       try {
-        const response = await axios.get('http://192.168.12.65:4000/vote-status', {
+        const response = await axios.get(`http://${config.ipAddress}:4000/vote-status`, {
           params: {
             userId: '1', // Hardcoded user ID
             issueId: parsedIssue.id,
@@ -36,7 +37,7 @@ const PeopleVote = () => {
 
   const handleVote = async (voteType: 'approve' | 'deny') => {
     try {
-      const response = await axios.post('http://192.168.54.213:4000/vote', {
+      const response = await axios.post(`http://${config.ipAddress}:4000/vote`, {
         issueId: String(parsedIssue.id),
         userId: '1', // Hardcoded user ID
         voteType,
