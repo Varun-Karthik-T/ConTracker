@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
-import { Card, Text, Button, FAB, Appbar } from 'react-native-paper';
-import { useNavigation } from '@react-navigation/native';
+import { Card, Text, Button, FAB } from 'react-native-paper';
 import { router } from 'expo-router';
 import * as Location from 'expo-location';
 import axios from 'axios';
@@ -55,7 +54,7 @@ const IssueCard: React.FC<{ issue: Issue; userLocation: Location.LocationObjectC
               {issue.description}
             </Text>
           </View>
-          <Button style={styles.viewButton} onPress={handlePress}>View</Button>
+          <Button style={styles.viewButton} onPress={handlePress} labelStyle={styles.viewButtonText}>View</Button>
         </View>
       </Card.Content>
     </Card>
@@ -126,6 +125,7 @@ const MyComponent = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 16, // Increase padding
   },
   loadingContainer: {
     flex: 1,
@@ -134,6 +134,7 @@ const styles = StyleSheet.create({
   },
   card: {
     margin: 10,
+    padding: 16, // Increase padding
   },
   content: {
     flexDirection: 'row',
@@ -153,12 +154,21 @@ const styles = StyleSheet.create({
   },
   viewButton: {
     alignSelf: 'center',
+     // Change color to teal
+     backgroundColor: 'lightgrey',
+  },
+  viewButtonText: {
+    fontSize: 18, // Increase font size
+    color: '#16a085',
   },
   fab: {
     position: 'absolute',
-    margin: 16,
+    margin: 30,
     right: 0,
     bottom: 0,
+    backgroundColor: '#a7e8b8',
+    color: 'white'
+    
   },
 });
 

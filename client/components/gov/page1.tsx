@@ -22,7 +22,7 @@ const MyComponent: React.FC<MyComponentProps> = ({ title, content, onPress }) =>
   </TouchableOpacity>
 );
 
-const CardWithMargin = ({ children }) => (
+const CardWithMargin: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <View style={styles.cardContainer}>{children}</View>
 );
 
