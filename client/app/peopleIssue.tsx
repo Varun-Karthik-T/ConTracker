@@ -45,7 +45,7 @@ const PeopleIssue = () => {
   };
 
   const handleSubmit = async () => {
-    if (!issueType || !description || !image || !location) {
+    if (!issueType || !description || !location) {
       alert('Please fill in all fields and capture an image.');
       return;
     }
@@ -58,7 +58,6 @@ const PeopleIssue = () => {
       approval: 0,
       denial: 0,
       status: 'pending',
-       // Send the Base64 string with the data URI prefix
       location,
     };
 

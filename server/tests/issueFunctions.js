@@ -1,5 +1,6 @@
 const Web3 = require("web3");
 const IssueManagement = require("../../dapp/build/contracts/IssueManagement.json");
+require('dotenv').config();
 
 const { RPC_URL, ISSUE_CONTRACT_ADDRESS } = process.env;
 // Set up web3 provider (e.g., local Ganache instance or Infura for a public network)
@@ -9,7 +10,7 @@ const web3 = new Web3(RPC_URL);
 
 // Get the contract ABI and address
 const abi = IssueManagement.abi;
-const contractAddress = ISSUE_CONTRACT_ADDRESS; // Replace with your deployed contract address
+const contractAddress = ISSUE_CONTRACT_ADDRESS;
 
 // Create a contract instance
 const contract = new web3.eth.Contract(abi, contractAddress);

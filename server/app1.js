@@ -10,6 +10,7 @@ const payment = require("./models/Payment");
 const Issue = require("./models/Issue");
 const UserIssue = require("./models/UserIssue");
 const Counter = require("./models/Counter"); 
+const IssueChain = require("./tests/issueFunctions");
 
 const PORT = process.env.PORT || 4000;
 const HOST = "0.0.0.0";
@@ -96,6 +97,29 @@ app.post("/issues", async (req, res) => {
     // Insert the new issue
     const newIssue = new Issue(issue);
     await newIssue.save();
+    
+
+await IssueChain.createIssue({
+    issueId: issue.id,
+    issueName: issue.issue_type,
+    description: issue.description,
+    dateOfComplaint: issue.date_of_complaint,
+    approval: issue.approval,
+    denial: issue.denial,
+    accuracy: Math.floor(80),
+    altitude: Math.floor(0),
+    latitude: Math.floor(issue.location.latitude * 1000000),
+    longitude: Math.floor(issue.location.longitude * 1000000)
+}, process.env.ACCOUNT_ADDRESS).then((res) => {
+    console.log("Issue added to chain successfully");
+}).catch((error) => {
+    console.log("Error adding issue in ConTrack Network:", error);
+    return res.status(500).json({ error: error.message });
+    console.error("Error creating issue:", error);
+});
+
+
+
 
     return res
       .status(201)
@@ -105,7 +129,7 @@ app.post("/issues", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-
+ 
 app.get("/issues", async (req, res) => {
   try {
     console.log("GET /issues");
