@@ -3,9 +3,10 @@ import { BottomNavigation, Text } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { useLayoutEffect } from 'react';
 import  Page2  from '../components/gov/page2';
+import  Page1  from '../components/gov/page1';
 
 
-const IssueRoute = () => <Text>hi</Text>;
+const IssueRoute = () => <Page1></Page1>;
 
 const ContractRoute = () => <Page2></Page2>;
 
