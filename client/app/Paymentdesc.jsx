@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView, Alert } from 'react-native';
 import { Button } from 'react-native-paper';
 import axios from 'axios';
 import { useLocalSearchParams } from 'expo-router';
+import config from './config';
 
 const AdminPaymentPage = () => {
   const { contract } = useLocalSearchParams();
@@ -23,7 +24,7 @@ const AdminPaymentPage = () => {
       setIsLoading(true);
 
       try {
-        const response = await axios.get(`http://192.168.12.65:4000/govcontract/${referenceId}`);
+        const response = await axios.get(`http://${config.ipAddress}:4000/govcontract/${referenceId}`);
         setPayment(response.data);
       } catch (error) {
         console.error('Error fetching payment:', error);
@@ -44,7 +45,7 @@ const AdminPaymentPage = () => {
     try {
 
       console.log("id",id);
-      const response = await axios.put(`http://192.168.12.65:4000/payments/`, {
+      const response = await axios.put(`http://${config.ipAddress}:4000/payments/`, {
         id,
         status: status,
       });

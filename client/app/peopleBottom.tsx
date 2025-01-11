@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { router } from 'expo-router';
 import * as Location from 'expo-location';
 import axios from 'axios';
+import config from './config';
 
 interface Issue {
   id: string;
@@ -85,7 +86,8 @@ const MyComponent = () => {
 
   const fetchIssues = async () => {
     try {
-      const response = await axios.get('http://192.168.12.65:4000/issues'); // Use your machine's IP address
+      console.log(config.ipAddress);
+      const response = await axios.get(`http://${config.ipAddress}:4000/issues`); // Use your machine's IP address
       setIssues(response.data);
     } catch (error) {
       console.error('Error fetching issues:', error);

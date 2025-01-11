@@ -4,6 +4,7 @@ import { Button, TextInput, RadioButton } from 'react-native-paper';
 import * as DocumentPicker from 'expo-document-picker';
 import { useLocalSearchParams } from 'expo-router';
 import axios from 'axios';
+import config from './config';
 
 const ContractDesc = () => {
   const { contract } = useLocalSearchParams();
@@ -30,7 +31,7 @@ const ContractDesc = () => {
     const fetchPendingPayment = async () => {
       try {
         console.log('Fetching pending payment for referenceId:', contractData.referenceId);
-        const response = await axios.get(`http://192.168.12.65:4000/govcontract/${contractData.referenceId}`);
+        const response = await axios.get(`http://${config.ipAddress}:4000/govcontract/${contractData.referenceId}`);
 
         if (response.data) {
           setPendingPayment(response.data); // Set the pending payment data (array)
@@ -94,7 +95,7 @@ const ContractDesc = () => {
       };
 
       // Use axios to make the POST request
-      const response = await axios.post('http://192.168.12.65:4000/govcontract', bidData, {
+      const response = await axios.post(`http://${config.ipAddress}:4000/govcontract`, bidData, {
         headers: {
           'Content-Type': 'application/json',
         },
