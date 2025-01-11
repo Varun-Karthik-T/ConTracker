@@ -32,9 +32,9 @@ const BidAuth = () => {
         name: selectedBidder.name,
         bidAmount: selectedBidder.bidAmount,
         contractId: contractData._id,
-        contractorId: selectedBidder.id
+        contractorId: selectedBidder.id,
       };
-    //   const response = await axios.post('http://192.168.54.15:4000/approveBid', data);
+      // const response = await axios.post('http://192.168.54.15:4000/approveBid', data);
 
       Alert.alert('Success', 'Bid approved successfully!');
       console.log('Response:', data);
@@ -51,42 +51,68 @@ const BidAuth = () => {
       <Text style={styles.title}>Bid Approval</Text>
       {bidders.map((bidder) => (
         <TouchableOpacity key={bidder.id} onPress={() => setSelectedBidder(bidder)}>
-          <Card style={[styles.card, selectedBidder?.id === bidder.id && styles.selectedCard]}>
+          <Card style={[styles.cardContainer, selectedBidder?.id === bidder.id && styles.selectedCard]}>
             <Card.Content>
-              <Text style={styles.label}>Bidder Name: {bidder.name}</Text>
-              <Text style={styles.label}>Bid Amount:  ₹{bidder.bidAmount.toLocaleString()}</Text>
+              <Text style={styles.cardTitle}>Bidder Name: {bidder.name}</Text>
+              <Text style={styles.cardContent}>Bid Amount: ₹{bidder.bidAmount.toLocaleString()}</Text>
             </Card.Content>
           </Card>
         </TouchableOpacity>
       ))}
-      <Button title="Approve Bid" onPress={handleApproveBid} disabled={isLoading} />
+      <Button
+        title="Approve Bid"
+        onPress={handleApproveBid}
+        disabled={isLoading}
+        color="#2c3e50" // Button color matching the theme
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     padding: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
   },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+    textAlign: 'center',
+    color: '#2c3e50',
   },
-  card: {
-    marginBottom: 10,
-    width: '100%',
+  cardContainer: {
+    margin: 10,
+    backgroundColor: '#ffffff',
+    borderRadius: 8,
+    elevation: 3, // Add shadow
   },
   selectedCard: {
-    borderColor: 'green',
+    borderColor: '#16a085',
     borderWidth: 2,
   },
-  label: {
+  cardTitle: {
     fontSize: 18,
-    marginBottom: 10,
+    fontWeight: 'bold',
+    color: '#2c3e50',
+    marginBottom: 5,
+  },
+  cardContent: {
+    fontSize: 16,
+    color: '#16a085',
+  },
+  loadingText: {
+    fontSize: 18,
+    textAlign: 'center',
+    marginTop: 20,
+    color: '#2c3e50',
+  },
+  errorText: {
+    fontSize: 18,
+    textAlign: 'center',
+    marginTop: 20,
+    color: 'red',
   },
 });
 
