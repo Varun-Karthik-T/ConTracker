@@ -12,6 +12,8 @@ export default function RootLayout() {
       <Stack.Screen name="bid" options={{ headerTitle: "Bid Info" }} />
       <Stack.Screen name="bidauth" options={{ headerTitle: "" }} />
       <Stack.Screen name="Paymentdesc" options={{ headerTitle: "Payment Description" }} />
+      <Stack.Screen name="peopleVote" options={{ headerTitle: "Cast Your Vote" }} />
+      <Stack.Screen name="peopleIssue" options={{ headerTitle: "Raise your Greivances" }} />
       {/* Add other screens here with their respective titles */}
     </Stack>
   );

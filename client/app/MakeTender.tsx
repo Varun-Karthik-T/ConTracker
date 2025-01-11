@@ -5,7 +5,7 @@ import { useLocalSearchParams } from 'expo-router';
 
 export default function MakeTender() {
   const { issue } = useLocalSearchParams();
-  const parsedIssue = JSON.parse(issue);
+  const parsedIssue = JSON.parse(Array.isArray(issue) ? issue[0] : issue);
 
   const [tenderId, setTenderId] = useState('');
   const [referenceNumber, setReferenceNumber] = useState('');

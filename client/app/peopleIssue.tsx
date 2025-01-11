@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, TextInput, Button, StyleSheet, Text, Image } from 'react-native';
+import { View, TextInput, Button, StyleSheet, Text, Image, ScrollView } from 'react-native';
 import { Card } from 'react-native-paper';
 import * as ImagePicker from 'expo-image-picker';
 import * as Location from 'expo-location';
@@ -77,7 +77,7 @@ const PeopleIssue = () => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Card style={styles.card}>
         <Card.Content>
           <Text style={styles.label}>Issue Type</Text>
@@ -95,38 +95,49 @@ const PeopleIssue = () => {
             placeholder="Enter description"
             multiline
           />
-          <Button title="Capture Image" onPress={handleCaptureImage} />
+          <Button title="Capture Image" onPress={handleCaptureImage} color="#2c3e50" /> {/* Change color to #2c3e50 */}
           {image && <Image source={{ uri: `data:image/jpeg;base64,${image}` }} style={styles.image} />}
-          <Button title="Submit Issue" onPress={handleSubmit} />
+          <View style={styles.buttonContainer}>
+            <Button title="Submit Issue" onPress={handleSubmit} color="#2c3e50" /> {/* Change color to #2c3e50 */}
+          </View>
         </Card.Content>
       </Card>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 16,
+    flexGrow: 1,
+    padding: 20, // Increase padding
+    backgroundColor: '#f5f5f5',
   },
   card: {
-    padding: 16,
+    padding: 20, // Increase padding
+    marginVertical: 10, // Add margin
   },
   label: {
-    fontSize: 16,
+    fontSize: 18, // Increase font size
     marginVertical: 8,
   },
   input: {
     borderWidth: 1,
     borderColor: '#ccc',
-    padding: 8,
+    padding: 10, // Increase padding
     marginVertical: 8,
     borderRadius: 4,
+    fontSize: 16, // Increase font size
   },
   image: {
     width: '100%',
     height: 200,
     marginVertical: 8,
+    borderRadius: 8, // Add border radius
+  },
+  buttonContainer: {
+    marginTop: 16, // Add space between buttons
+    borderRadius: 8, // Curve the boundaries of the buttons
+    overflow: 'hidden', // Ensure the border radius is applied
   },
 });
 
