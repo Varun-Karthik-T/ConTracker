@@ -11143,12 +11143,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0xf6F4eAbb5f93962856b9DAF3708Dd3b70A08a763",
-      "transactionHash": "0xb0834083a5062be2459d7b144610a2c185ddf2266dd9219a5ab8d27bc8c78d42"
+      "address": "0x66453457Feb6112086cEd4499ec83d50a60215b8",
+      "transactionHash": "0xcd0322ea010c293ee9ea8473bd1a765a9fc4ade71e7241b8f6f83b2242110833"
     }
   },
   "schemaVersion": "3.4.16",
-  "updatedAt": "2025-01-11T04:18:19.106Z",
+  "updatedAt": "2025-01-11T05:36:52.788Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
