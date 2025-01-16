@@ -5,7 +5,7 @@ const { ACCOUNT_ADDRESS } = process.env;
 
 async function main() {
   const spendDetails = {
-    spendId: 40,
+    spendId: 42,
     reason: "Initial raw materials"
   };
 

@@ -8,7 +8,7 @@ module.exports = {
     development: {
       host: "127.0.0.1",
       port: 7545,
-      network_id: "*", // Match any network id
+      network_id: "*", 
     },
     polygon_zkevm: {
       provider: () => new HDWalletProvider({
@@ -16,14 +16,14 @@ module.exports = {
           phrase: MNEMONIC
         },
         providerOrUrl: RPC_URL,
-        pollingInterval: 8000 // Optional: to make HDWallet less "chatty" over JSON-RPC
+        pollingInterval: 8000 
       }),
-      network_id: "2442", // Polygon zkEVM network ID
-      gas: 2000000, // Lower gas limit to minimize fund usage
-      gasPrice: 1000000000,// Lower gas price (1 gwei)
-      confirmations: 2, // # of confirmations to wait between deployments
-      timeoutBlocks: 200, // # of blocks before a deployment times out
-      skipDryRun: true // Skip dry run before migrations
+      network_id: "2442", 
+      gas: 2000000,
+      gasPrice: 1000000000,
+      confirmations: 2,
+      timeoutBlocks: 200,
+      skipDryRun: true
     }
   },
   mocha: {
